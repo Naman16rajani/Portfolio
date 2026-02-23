@@ -37,19 +37,17 @@ export function useResumePrefetch(enabled: boolean) {
       let response = await cache.match(RESUME_URL)
 
       if (!response) {
-        // Prefetch may still be in-flight or was evicted — fetch live and store
+        // Prefetch missed or evicted — fetch live and store for next time
         const fetched = await fetch(RESUME_URL)
-        // Clone before consuming: one copy for cache, one for blob
         await cache.put(RESUME_URL, fetched.clone())
         response = fetched
       }
 
-      const blob = await response.blob()
-      const blobUrl = URL.createObjectURL(blob)
-      window.open(blobUrl, '_blank')
-
-      // Revoke after browser has had time to read the URL
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 1000)
+      // response.url is the final resolved URL after following the redirect
+      // (e.g. http://localhost:3000/api/media/file/Resume.pdf)
+      // Open that directly — avoids blob:// URL PDF rendering issues
+      const finalUrl = response.url || RESUME_URL
+      window.open(finalUrl, '_blank')
     } catch {
       // Fallback on any error
       window.open(RESUME_URL, '_blank')

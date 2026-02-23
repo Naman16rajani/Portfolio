@@ -6,15 +6,16 @@ import './Home.scss'
 
 type HomeProps = {
   roles: string[]
+  displayName: string
 }
 
-export function Home({ roles }: HomeProps) {
+export function Home({ roles, displayName }: HomeProps) {
   const displayRoles = ['Human', ...roles]
 
   return (
     <div id="home" className="app__home">
       <div className="app__home-div">
-        <h1 className="app__home-intro">Naman Rajani</h1>
+        <h1 className="app__home-intro">{displayName}</h1>
         {/* <br /> */}
         <div className="TypingEffect">
           <p>

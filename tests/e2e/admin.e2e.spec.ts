@@ -38,4 +38,13 @@ test.describe('Admin Panel', () => {
     const editViewArtifact = page.locator('input[name="email"]')
     await expect(editViewArtifact).toBeVisible()
   })
+
+  test('abouts collection has contact fields', async () => {
+    await page.goto('http://localhost:3000/admin/collections/abouts/create')
+    await expect(page).toHaveURL(/\/admin\/collections\/abouts\/[a-zA-Z0-9-_]+/)
+    // check presence of new inputs
+    await expect(page.locator('input[name="name"]')).toBeVisible()
+    await expect(page.locator('input[name="email"]')).toBeVisible()
+    await expect(page.locator('input[name="phone"]')).toBeVisible()
+  })
 })

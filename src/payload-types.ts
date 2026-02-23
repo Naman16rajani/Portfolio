@@ -187,6 +187,9 @@ export interface Role {
 export interface About {
   id: number;
   title: string;
+  name: string;
+  email: string;
+  phone: string;
   description: {
     root: {
       type: string;
@@ -458,6 +461,9 @@ export interface RolesSelect<T extends boolean = true> {
  */
 export interface AboutsSelect<T extends boolean = true> {
   title?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
   description?: T;
   imgUrl?: T;
   updatedAt?: T;

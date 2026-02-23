@@ -5,12 +5,17 @@ import { MdEmail } from 'react-icons/md'
 import { IoCall } from 'react-icons/io5'
 import './Contact.scss'
 
-export function Contact() {
+type ContactProps = {
+  email: string
+  phone: string
+}
+
+export function Contact({ email, phone }: ContactProps) {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [isFormSubmitted, setIsFormSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const { name: username, email, message } = formData
+  const { name: username, email: formEmail, message } = formData
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -44,16 +49,20 @@ export function Contact() {
       <h2 className="head-text">Take a coffee & chat with me</h2>
 
       <div className="app__footer-cards">
-        <div className="app__footer-card">
-          <a href="mailto:rajaninaman16@gmail.com">
-            <MdEmail /> <span style={{ padding: '2px' }} /> rajaninaman16@gmail.com
-          </a>
-        </div>
-        <div className="app__footer-card">
-          <a href="tel:+13417778615">
-            <IoCall /> <span style={{ padding: '2px' }} /> +1 (341) 777-8615
-          </a>
-        </div>
+        {email && (
+          <div className="app__footer-card">
+            <a href={`mailto:${email}`}>
+              <MdEmail /> <span style={{ padding: '2px' }} /> {email}
+            </a>
+          </div>
+        )}
+        {phone && (
+          <div className="app__footer-card">
+            <a href={`tel:${phone}`}>
+              <IoCall /> <span style={{ padding: '2px' }} /> {phone}
+            </a>
+          </div>
+        )}
       </div>
 
       {!isFormSubmitted ? (
@@ -74,7 +83,7 @@ export function Contact() {
               type="email"
               placeholder="Your Email"
               name="email"
-              value={email}
+              value={formEmail}
               onChange={handleChangeInput}
             />
           </div>
