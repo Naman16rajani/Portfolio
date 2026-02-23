@@ -1,0 +1,60 @@
+.app__navigation-button {
+  position: relative;
+  color: #243a73;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  background: #92b4ec;
+  width: 4rem;
+  border-radius: 10px;
+  height: 4rem;
+  max-width: 4rem;
+  max-height: 4rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  text-decoration: none;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+  padding-inline: 0;
+  border: none;
+
+  svg {
+    line-height: 0;
+    vertical-align: middle;
+  }
+
+  &:hover {
+    background: #8d8daa;
+    color: white;
+  }
+
+  @media (screen and max-width: 768px) {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  .active {
+    background: #b1bce6;
+  }
+}
+
+.app__navigation-button-ripple {
+  position: absolute;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  transition: background 0.8s;
+
+  &:hover {
+    background: transparent radial-gradient(circle, transparent 1%, rgba(0, 0, 0, 0.1) 1%) center/15000%;
+  }
+
+  &:active {
+    background-color: transparent;
+    background-size: 100%;
+    transition: background 0s;
+  }
+}

@@ -1,0 +1,159 @@
+.app__about {
+  min-height: 100vh;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: justify;
+  flex-direction: row;
+  font-family: 'Lato', serif;
+  margin: 0 0 0 6rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin: 0;
+    gap: 1rem;
+    padding: 5%;
+    justify-content: center;
+  }
+}
+
+.head-text {
+  margin-top: 1.5rem;
+  font-size: 2.5rem;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    margin-top: 1rem;
+    font-size: 2rem;
+  }
+}
+
+.app__about-image {
+  margin-left: 6rem;
+  width: 250px;
+  height: 250px;
+  min-width: 250px;
+  min-height: 250px;
+  padding: 0;
+  flex-shrink: 0;
+
+  & > img {
+    border-radius: 50%;
+    border: none;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+
+    @media (max-width: 768px) {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    min-height: 150px;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    width: 180px;
+    height: 180px;
+    min-width: 180px;
+    min-height: 180px;
+  }
+}
+
+.app__about-description {
+  padding: 1rem;
+  margin-right: 20%;
+
+  & > h5 {
+    font-size: 1.5rem;
+    line-height: 1.334;
+    font-weight: 400 !important;
+  }
+
+  & > h4 {
+    font-size: 2.125rem;
+    line-height: 1.235;
+    font-weight: 400 !important;
+  }
+
+  & > p {
+    font-weight: 400 !important;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin: 0;
+
+    & > h5 {
+      font-size: 1.5rem;
+      line-height: 1.334;
+    }
+
+    & > h4 {
+      font-size: 1.9rem;
+      line-height: 1.235;
+    }
+  }
+}
+
+.app__about-button {
+  align-items: center;
+  appearance: none;
+  background-color: rgb(36, 58, 115);
+  border: none;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: Lato, serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 36px;
+  justify-content: center;
+  line-height: 24.5px;
+  margin: 2px;
+  min-width: 64px;
+  outline: none;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.25s;
+  vertical-align: middle;
+  width: 136px;
+}
+
+.app__about-button-ripple {
+  position: absolute;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  transition: background 0.8s;
+
+  &:hover {
+    background: transparent radial-gradient(circle, transparent 1%, rgba(0, 0, 0, 0.1) 1%) center/15000%;
+  }
+
+  &:active {
+    background-color: transparent;
+    background-size: 100%;
+    transition: background 0s;
+  }
+}

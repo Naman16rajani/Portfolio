@@ -1,0 +1,140 @@
+.app__experience {
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-family: 'Lato', serif;
+  background-color: #e4f1ff;
+  flex-direction: column;
+  padding: 1rem;
+  color: #0f1035;
+}
+
+.app__experience-description {
+  position: relative;
+  width: 80%;
+  padding: 50px 0;
+  margin: 50px auto;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -1px;
+    width: 2px;
+    height: 100%;
+    background: #ccd1d9;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 768px) {
+    &:before {
+      left: 8px;
+      width: 2px;
+    }
+  }
+}
+
+.timeline-block {
+  width: calc(50% + 8px);
+  display: flex;
+  justify-content: space-between;
+  clear: both;
+
+  &:nth-child(odd) {
+    float: right;
+
+    @media screen and (max-width: 768px) {
+      float: none;
+    }
+  }
+
+  &:nth-child(even) {
+    float: left;
+    direction: rtl;
+
+    @media screen and (max-width: 768px) {
+      float: none;
+      direction: ltr;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+.marker {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #f5f7fa;
+  background: #427d9d;
+  margin-top: 10px;
+  z-index: 9999;
+}
+
+.timeline-content {
+  width: 95%;
+  padding: 0 15px;
+  color: #666;
+
+  ul {
+    direction: ltr;
+    text-align: justify;
+    list-style-position: outside;
+    padding-left: 20px;
+    margin-top: 5px;
+  }
+
+  li {
+    margin-bottom: 5px;
+    font-size: 14px;
+    line-height: 1.5em;
+    word-spacing: 1px;
+    color: #0f1035;
+  }
+}
+
+.app__experience-description-primary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .app__experience-description-primary-name {
+    white-space: normal;
+    text-overflow: ellipsis;
+  }
+
+  .app__experience-description-primary-date {
+    white-space: nowrap;
+  }
+}
+
+.timeline-content h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 25px;
+  font-weight: 500;
+  color: #11235a;
+}
+
+.timeline-content span {
+  font-size: 18.5px;
+  color: #0f1035;
+}
+
+.timeline-content p {
+  font-size: 14px;
+  line-height: 1.5em;
+  word-spacing: 1px;
+  color: #0f1035;
+}

@@ -1,0 +1,57 @@
+.app__home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(60deg, rgba(84, 58, 183, 1) 0%, rgba(0, 172, 193, 1) 100%);
+}
+
+.app__home-div {
+  width: fit-content;
+}
+
+.app__home-intro {
+  font-family: 'Lato', serif;
+  font-weight: 300;
+  font-size: 3.75rem;
+  line-height: 1.2;
+  color: var(--white-color);
+  letter-spacing: 2px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 3.2rem;
+  }
+}
+
+.TypingEffect {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: 'Lato', serif;
+  font-weight: 300;
+  font-size: 2rem;
+  letter-spacing: 1.5px;
+  color: white;
+  margin: 0;
+  width: initial;
+
+  @media screen and (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+
+  p {
+    display: initial;
+  }
+
+  .typing-cursor {
+    animation: blink 1s step-end infinite;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

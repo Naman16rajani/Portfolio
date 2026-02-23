@@ -8,9 +8,19 @@
 
 /.idea/*
 !/.idea/runConfigurations
-
+.idea
+.next
 # testing
 /coverage
+
+.agents
+.cursor
+
+.npmrc
+.yarnrc
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
 
 # next.js
 /.next/

@@ -1,59 +1,54 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
-import { getPayload } from 'payload'
-import React from 'react'
-import { fileURLToPath } from 'url'
+import { getPayloadClient } from '@/lib/payload'
+import { serializeRichText } from '@/lib/richText'
+import { getImageUrl } from '@/lib/imageUrl'
 
-import config from '@/payload.config'
-import './styles.css'
+export const dynamic = 'force-dynamic'
+import { Navbar } from '@/components/Navbar/Navbar'
+import { Home } from '@/components/Home/Home'
+import { About } from '@/components/About/About'
+import { Experience } from '@/components/Experience/Experience'
+import { Project } from '@/components/Project/Project'
+import { Contact } from '@/components/Contact/Contact'
 
-export default async function HomePage() {
-  const headers = await getHeaders()
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
+export default async function PortfolioPage() {
+  const payload = await getPayloadClient()
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+  const [rolesRes, aboutsRes, resumeRes, experiencesRes, projectsRes] = await Promise.all([
+    payload.find({ collection: 'roles', limit: 100 }),
+    payload.find({ collection: 'abouts', limit: 10, depth: 1 }),
+    payload.find({ collection: 'resume', where: { name: { equals: 'resume' } }, limit: 1 }),
+    payload.find({ collection: 'work-experience', limit: 50, depth: 1, sort: '-JoiningDate' }),
+    payload.find({ collection: 'projects', limit: 50, depth: 1 }),
+  ])
+
+  const roles = rolesRes.docs.map((r) => r.title)
+  const about = aboutsRes.docs.map((a) => ({
+    ...a,
+    descriptionHtml: serializeRichText(a.description),
+    imgUrl: getImageUrl(a.imgUrl),
+  }))
+  const hasResume = resumeRes.docs.length > 0
+  const experiences = experiencesRes.docs
+    .sort((a, b) => new Date(b.JoiningDate).getTime() - new Date(a.JoiningDate).getTime())
+    .map((e) => ({
+      ...e,
+      companyHtml: serializeRichText(e.company),
+      descHtml: serializeRichText(e.desc),
+    }))
+  const projects = projectsRes.docs.map((p) => ({
+    ...p,
+    descriptionHtml: serializeRichText(p.description),
+    imgUrl: getImageUrl(p.imgUrl),
+  }))
 
   return (
-    <div className="home">
-      <div className="content">
-        <picture>
-          <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
-          <Image
-            alt="Payload Logo"
-            height={65}
-            src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg"
-            width={65}
-          />
-        </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
-        <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
-        </div>
-      </div>
-      <div className="footer">
-        <p>Update this page by editing</p>
-        <a className="codeLink" href={fileURL}>
-          <code>app/(frontend)/page.tsx</code>
-        </a>
-      </div>
+    <div className="app">
+      <Navbar />
+      <Home roles={roles} />
+      <About about={about} hasResume={hasResume} />
+      <Experience experiences={experiences} />
+      <Project works={projects} />
+      <Contact />
     </div>
   )
 }

@@ -7,6 +7,12 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Roles } from './collections/Roles'
+import { Abouts } from './collections/Abouts'
+import { Resume } from './collections/Resume'
+import { WorkExperience } from './collections/WorkExperience'
+import { Projects } from './collections/Projects'
+import { Contact } from './collections/Contact'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -18,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Roles, Abouts, Resume, WorkExperience, Projects, Contact],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -26,7 +32,24 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '',
+      connectionString: (() => {
+        const url = process.env.DATABASE_URL || ''
+        if (!url || !url.startsWith('postgres')) return url
+        const isLocalhost = /@(localhost|127\.0\.0\.1)(:\d+)?\//.test(url)
+        if (isLocalhost) {
+          if (/[?&]sslmode=/.test(url)) return url
+          const separator = url.includes('?') ? '&' : '?'
+          return `${url}${separator}sslmode=disable`
+        }
+        if (/[?&]sslmode=(require|prefer|verify-ca)(&|$)/.test(url)) {
+          return url.replace(/sslmode=(require|prefer|verify-ca)/, 'sslmode=verify-full')
+        }
+        if (!/[?&]sslmode=/.test(url)) {
+          const separator = url.includes('?') ? '&' : '?'
+          return `${url}${separator}sslmode=verify-full`
+        }
+        return url
+      })(),
     },
   }),
   sharp,

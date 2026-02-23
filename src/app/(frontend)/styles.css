@@ -1,16 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
 :root {
+  --font-base: 'Lato', sans-serif;
   --font-mono: 'Roboto Mono', monospace;
+  --primary-color: #edf2f8;
+  --secondary-color: #313bac;
+  --tertiary-color: #7fc7d9;
+  --black-color: #0f1035;
+  --selected-color: #b1bce6;
+  --lightBlue-color: #8d8daa;
+  --gray-color: #6b7688;
+  --brown-color: #46364a;
+  --white-color: white;
 }
 
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100%;
 }
 
 html {
   font-size: 18px;
   line-height: 32px;
-
-  background: rgb(0, 0, 0);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -21,12 +38,11 @@ body,
 }
 
 body {
-  font-family: system-ui;
+  font-family: var(--font-base);
   font-size: 18px;
   line-height: 32px;
-
   margin: 0;
-  color: rgb(1000, 1000, 1000);
+  color: var(--black-color);
 
   @media (max-width: 1024px) {
     font-size: 15px;
