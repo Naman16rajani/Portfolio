@@ -15,20 +15,30 @@ export default async function PortfolioPage() {
 
   const [rolesRes, aboutsRes, resumeRes, experiencesRes, projectsRes] = await Promise.all([
     payload.find({ collection: 'roles', limit: 100 }),
-    payload.find({ collection: 'abouts', limit: 10, depth: 1 }),
-    payload.find({ collection: 'resume', where: { name: { equals: 'resume' } }, limit: 1 }),
+    payload.find({ collection: 'abouts', limit: 1, depth: 1 }),
+    payload.find({ collection: 'resume', limit: 1, depth: 1 }),
     payload.find({ collection: 'work-experience', limit: 50, depth: 1, sort: '-JoiningDate' }),
     payload.find({ collection: 'projects', limit: 50, depth: 1 }),
   ])
 
   const roles = rolesRes.docs.map((r) => r.title)
   // keep raw lexical data for rich-text rendering instead of html string
-  const about = aboutsRes.docs.map((a) => ({
-    ...a,
-    description: a.description, // SerializedEditorState
-    imgUrl: getImageUrl(a.imgUrl),
-  }))
-  const hasResume = resumeRes.docs.length > 0
+  // only use first about document if available
+  const about = aboutsRes.docs[0]
+  const aboutData = about
+    ? {
+        ...about,
+        description: about.description, // SerializedEditorState
+        imgUrl: getImageUrl(about.imgUrl),
+      }
+    : null
+  // determine if a resume document with a usable file URL exists
+  const resumeDoc = resumeRes.docs[0] as {
+    pdfFile?: { url?: string; value?: { url?: string } }
+  } | null
+
+  const hasResume = Boolean(resumeDoc && (resumeDoc.pdfFile?.url || resumeDoc.pdfFile?.value?.url))
+
   const experiences = experiencesRes.docs
     .sort((a, b) => new Date(b.JoiningDate).getTime() - new Date(a.JoiningDate).getTime())
     .map((e) => ({
@@ -46,12 +56,12 @@ export default async function PortfolioPage() {
 
   return (
     <div className="app">
-      <Navbar />
-      <Home roles={roles} />
-      <About about={about} hasResume={hasResume} />
+      <Navbar hasResume={hasResume} />
+      <Home roles={roles} displayName={aboutData?.name ?? ''} />
+      <About about={about ? [aboutData] : []} hasResume={hasResume} email={aboutData?.email} />
       <Experience experiences={experiences} />
       <Project works={projects} />
-      <Contact />
+      <Contact email={aboutData?.email ?? ''} phone={aboutData?.phone ?? ''} />
     </div>
   )
 }
