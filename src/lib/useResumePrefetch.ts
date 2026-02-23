@@ -26,9 +26,13 @@ export function useResumePrefetch(enabled: boolean) {
 
   // Called when user clicks the Resume button
   const openResume = useCallback(async () => {
+    // Open the window immediately (synchronously in the user gesture) to avoid
+    // mobile browsers (iOS Safari) blocking window.open() called after an await.
+    const win = window.open('', '_blank')
+
     // Fallback: no Cache API support
     if (typeof caches === 'undefined') {
-      window.open(RESUME_URL, '_blank')
+      if (win) win.location.href = RESUME_URL
       return
     }
 
@@ -44,13 +48,11 @@ export function useResumePrefetch(enabled: boolean) {
       }
 
       // response.url is the final resolved URL after following the redirect
-      // (e.g. http://localhost:3000/api/media/file/Resume.pdf)
-      // Open that directly — avoids blob:// URL PDF rendering issues
       const finalUrl = response.url || RESUME_URL
-      window.open(finalUrl, '_blank')
+      if (win) win.location.href = finalUrl
     } catch {
       // Fallback on any error
-      window.open(RESUME_URL, '_blank')
+      if (win) win.location.href = RESUME_URL
     }
   }, [])
 

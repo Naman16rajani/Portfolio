@@ -84,10 +84,12 @@
 
   ul {
     direction: ltr;
-    text-align: justify;
     list-style-position: outside;
     padding-left: 20px;
     margin-top: 5px;
+    @media screen and (min-width: 769px) {
+      text-align: justify;
+    }
   }
 
   li {

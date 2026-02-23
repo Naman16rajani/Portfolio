@@ -11,7 +11,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
     UPDATE "abouts" SET "name" = '', "email" = '', "phone" = '' WHERE "name" IS NULL;
   `)
-`}
+}
 
 export async function down({ db }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
@@ -20,4 +20,4 @@ export async function down({ db }: MigrateDownArgs): Promise<void> {
       DROP COLUMN IF EXISTS "email",
       DROP COLUMN IF EXISTS "phone";
   `)
-`}
+}

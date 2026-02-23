@@ -47,7 +47,7 @@ export function About({ about, hasResume, email, githubUrl, linkedinUrl }: About
         <div className="app__about-buttons">
           {hasResume && (
             <button className="app__about-button" onClick={() => openResume()}>
-              <IoIosDocument />
+              <IoIosDocument /> <span style={{ marginLeft: '3px' }} />
               Resume
               <span className="app__about-button-ripple" />
             </button>
@@ -56,7 +56,7 @@ export function About({ about, hasResume, email, githubUrl, linkedinUrl }: About
           {email && (
             <a href={`mailto:${email}`}>
               <button className="app__about-button">
-                <MdEmail />
+                <MdEmail /> <span style={{ marginLeft: '3px' }} />
                 Email
                 <span className="app__about-button-ripple" />
               </button>
@@ -67,6 +67,7 @@ export function About({ about, hasResume, email, githubUrl, linkedinUrl }: About
             <a href={githubUrl} target="_blank" rel="noopener noreferrer">
               <button className="app__about-button">
                 <FaGithub />
+                <span style={{ marginLeft: '3px' }} />
                 GitHub
                 <span className="app__about-button-ripple" />
               </button>
@@ -77,6 +78,7 @@ export function About({ about, hasResume, email, githubUrl, linkedinUrl }: About
             <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
               <button className="app__about-button">
                 <FaLinkedin />
+                <span style={{ marginLeft: '3px' }} />
                 LinkedIn
                 <span className="app__about-button-ripple" />
               </button>

@@ -6,12 +6,25 @@ export const aboutSeed = {
   name: 'Naman Rajani',
   email: 'rajaninaman16@gmail.com',
   phone: '+1 (341) 777-8615',
-  description: [
-    {
-      type: 'paragraph',
-      children: [{ text: 'Test description' }],
+  description: {
+    root: {
+      type: 'root',
+      children: [
+        {
+          type: 'paragraph',
+          version: 1,
+          children: [{ type: 'text', text: 'Test description', version: 1 }],
+          direction: 'ltr' as const,
+          format: '' as const,
+          indent: 0,
+        },
+      ],
+      direction: 'ltr' as const,
+      format: '' as const,
+      indent: 0,
+      version: 1,
     },
-  ],
+  },
   // imgUrl to be filled in dynamically in seed function
   imgUrl: null,
 }
