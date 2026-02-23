@@ -3,9 +3,10 @@
 import { IoIosDocument } from 'react-icons/io'
 import { MdEmail } from 'react-icons/md'
 import { FaLinkedin, FaGithub } from 'react-icons/fa'
-import { downloadPdf } from '@/lib/downloadPdf'
+// resume downloads now handled by direct link
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import { useResumePrefetch } from '@/lib/useResumePrefetch'
 import './About.scss'
 
 type AboutItem = {
@@ -17,9 +18,11 @@ type AboutItem = {
 type AboutProps = {
   about: AboutItem[]
   hasResume: boolean
+  email?: string
 }
 
-export function About({ about, hasResume }: AboutProps) {
+export function About({ about, hasResume, email }: AboutProps) {
+  const { openResume } = useResumePrefetch(hasResume)
   return (
     <div id="about" className="app__about">
       <div className="app__about-image">
@@ -40,7 +43,7 @@ export function About({ about, hasResume }: AboutProps) {
         <br />
 
         {hasResume && (
-          <button className="app__about-button" onClick={() => downloadPdf('resume')}>
+          <button className="app__about-button" onClick={() => openResume()}>
             <IoIosDocument />
             <span
               style={{
@@ -64,21 +67,23 @@ export function About({ about, hasResume }: AboutProps) {
           }}
         />
 
-        <a href="mailto:rajaninaman16@gmail.com">
-          <button className="app__about-button">
-            <MdEmail />
-            <span
-              style={{
-                display: 'inline-block',
-                width: '3px',
-                height: '3px',
-                backgroundColor: 'transparent',
-              }}
-            />
-            Email
-            <span className="app__about-button-ripple" />
-          </button>
-        </a>
+        {email && (
+          <a href={`mailto:${email}`}>
+            <button className="app__about-button">
+              <MdEmail />
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: '3px',
+                  height: '3px',
+                  backgroundColor: 'transparent',
+                }}
+              />
+              Email
+              <span className="app__about-button-ripple" />
+            </button>
+          </a>
+        )}
 
         <span
           style={{
