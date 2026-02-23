@@ -30,6 +30,8 @@ export default async function PortfolioPage() {
         ...about,
         description: about.description, // SerializedEditorState
         imgUrl: getImageUrl(about.imgUrl),
+        githubUrl: about.githubUrl ?? undefined,
+        linkedinUrl: about.linkedinUrl ?? undefined,
       }
     : null
   // determine if a resume document with a usable file URL exists
@@ -58,7 +60,13 @@ export default async function PortfolioPage() {
     <div className="app">
       <Navbar hasResume={hasResume} />
       <Home roles={roles} displayName={aboutData?.name ?? ''} />
-      <About about={about ? [aboutData] : []} hasResume={hasResume} email={aboutData?.email} />
+      <About
+        about={aboutData ? [aboutData] : []}
+        hasResume={hasResume}
+        email={aboutData?.email}
+        githubUrl={aboutData?.githubUrl}
+        linkedinUrl={aboutData?.linkedinUrl}
+      />
       <Experience experiences={experiences} />
       <Project works={projects} />
       <Contact email={aboutData?.email ?? ''} phone={aboutData?.phone ?? ''} />
