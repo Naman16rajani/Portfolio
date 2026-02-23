@@ -16,9 +16,10 @@
   font-family: 'Lato', serif;
   font-weight: 300;
   font-size: 3.75rem;
-  line-height: 1.2;
+  // line-height: 1.2;
   color: var(--white-color);
   letter-spacing: 2px;
+  margin:0;
 
   @media screen and (max-width: 768px) {
     font-size: 3.2rem;

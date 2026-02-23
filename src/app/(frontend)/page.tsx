@@ -22,9 +22,10 @@ export default async function PortfolioPage() {
   ])
 
   const roles = rolesRes.docs.map((r) => r.title)
+  // keep raw lexical data for rich-text rendering instead of html string
   const about = aboutsRes.docs.map((a) => ({
     ...a,
-    descriptionHtml: serializeRichText(a.description),
+    description: a.description, // SerializedEditorState
     imgUrl: getImageUrl(a.imgUrl),
   }))
   const hasResume = resumeRes.docs.length > 0
@@ -37,8 +38,10 @@ export default async function PortfolioPage() {
     }))
   const projects = projectsRes.docs.map((p) => ({
     ...p,
-    descriptionHtml: serializeRichText(p.description),
-    imgUrl: getImageUrl(p.imgUrl),
+    description: p.description, // raw lexical value
+    // imgUrl removed per new design
+    githubLink: p.githubLink,
+    demoLink: p.demoLink,
   }))
 
   return (

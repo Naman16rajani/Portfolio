@@ -3,15 +3,18 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FaArrowRightLong } from 'react-icons/fa6'
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import './Project.scss'
 
 type ProjectItem = {
   title: string
   name: string
-  descriptionHtml: string
-  projectLink?: string | null
+  description: SerializedEditorState // raw richtext data
+  githubLink?: string | null
+  demoLink?: string | null
   tags?: Array<{ tag: string }> | null
-  imgUrl: string
 }
 
 type ProjectProps = {
@@ -26,7 +29,10 @@ function getTagStrings(tags: ProjectItem['tags']): string[] {
 export function Project({ works }: ProjectProps) {
   const [filterWork, setFilterWork] = useState(works)
   const [activeFilter, setActiveFilter] = useState('All')
-  const [animateCard, setAnimateCard] = useState<{ y: number; opacity: number }>({ y: 0, opacity: 1 })
+  const [animateCard, setAnimateCard] = useState<{ y: number; opacity: number }>({
+    y: 0,
+    opacity: 1,
+  })
 
   const tags = ['All', ...Array.from(new Set(works.flatMap((w) => getTagStrings(w.tags))))]
 
@@ -44,24 +50,24 @@ export function Project({ works }: ProjectProps) {
     }, 500)
   }
 
-  const handleImageClick = (githubLink: string | null | undefined) => {
-    if (githubLink) {
-      window.open(githubLink, '_blank')
+  const handleLinkClick = (url: string | null | undefined) => {
+    if (url) {
+      window.open(url, '_blank')
     }
   }
 
   return (
-    <div className="app__work" id="project">
+    <div className="app__project" id="project">
       <h2 className="head-text">
         My Creative <span>Portfolio</span> Section
       </h2>
 
-      <div className="app__work-filter">
+      <div className="app__project-filter">
         {tags.map((item, index) => (
           <div
             key={index}
             onClick={() => handleWorkFilter(item)}
-            className={`app__work-filter-item app__flex p-text ${activeFilter === item ? 'item-active' : ''}`}
+            className={`app__project-filter-item app__flex p-text ${activeFilter === item ? 'item-active' : ''}`}
           >
             {item}
           </div>
@@ -71,37 +77,55 @@ export function Project({ works }: ProjectProps) {
       <motion.div
         animate={animateCard}
         transition={{ duration: 0.5, delayChildren: 0.5 }}
-        className="app__work-portfolio"
+        className="app__project-portfolio"
       >
         {filterWork.map((work, index) => {
           const workTags = getTagStrings(work.tags)
           return (
-            <div
-              className="app__work-item app__flex"
-              key={index}
-              onClick={() => handleImageClick(work.projectLink)}
-            >
-              <div className="app__work-img app__flex">
-                <img className="clickable" src={work.imgUrl} alt={work.name} />
-                <div className="app__work-tag app__flex">
-                  <p className="p-text">{workTags[0] || 'Project'}</p>
-                </div>
-              </div>
-
-              <div className="app__work-content app__flex">
+            <div className="app__project-item app__flex" key={index}>
+              <div className="app__project-content app__flex">
                 <h4 className="bold-text">{work.title}</h4>
-                <p className="p-text" dangerouslySetInnerHTML={{ __html: work.descriptionHtml }} suppressHydrationWarning />
+                {/* tag badges */}
+                <div className="tag-badges">
+                  {workTags.map((t, i) => (
+                    <span key={i} className="tag-badge">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                {/* render rich text using Payload's RichText component */}
+                <div>
+                  <RichText data={work.description} />
+                </div>
                 <br />
-                <button
-                  className="app__work-button"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleImageClick(work.projectLink)
-                  }}
-                >
-                  More info <FaArrowRightLong />
-                  <span className="app__work-button-ripple" />
-                </button>
+                <div className="button-group">
+                  {work.githubLink && (
+                    <button
+                      className="app__project-button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleLinkClick(work.githubLink)
+                      }}
+                    >
+                      <FaGithub className="button-icon" />
+                      <span className="button-text">GitHub</span>
+                      <span className="app__project-button-ripple" />
+                    </button>
+                  )}
+                  {work.demoLink && (
+                    <button
+                      className="app__project-button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleLinkClick(work.demoLink)
+                      }}
+                    >
+                      <FaExternalLinkAlt className="button-icon" />
+                      <span className="button-text">Demo</span>
+                      <span className="app__project-button-ripple" />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           )

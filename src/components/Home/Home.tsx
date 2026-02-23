@@ -15,7 +15,7 @@ export function Home({ roles }: HomeProps) {
     <div id="home" className="app__home">
       <div className="app__home-div">
         <h1 className="app__home-intro">Naman Rajani</h1>
-        <br />
+        {/* <br /> */}
         <div className="TypingEffect">
           <p>
             {displayRoles.length > 0 && (

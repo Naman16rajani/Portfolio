@@ -86,13 +86,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"title" varchar NOT NULL,
   	"name" varchar NOT NULL,
   	"description" jsonb NOT NULL,
-  	"project_link" varchar,
-  	"img_url_id" integer NOT NULL,
-  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
-  );
-  
-  CREATE TABLE "contact" (
+   	"github_link" varchar,
+   	"demo_link" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
   	"email" varchar NOT NULL,

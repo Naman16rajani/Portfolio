@@ -25,7 +25,11 @@ export const Projects: CollectionConfig = {
       required: true,
     },
     {
-      name: 'projectLink',
+      name: 'githubLink',
+      type: 'text',
+    },
+    {
+      name: 'demoLink',
       type: 'text',
     },
     {
@@ -38,12 +42,6 @@ export const Projects: CollectionConfig = {
           required: true,
         },
       ],
-    },
-    {
-      name: 'imgUrl',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
     },
   ],
 }

@@ -282,14 +282,14 @@ export interface Project {
     };
     [k: string]: unknown;
   };
-  projectLink?: string | null;
+  githubLink?: string | null;
+  demoLink?: string | null;
   tags?:
     | {
         tag: string;
         id?: string | null;
       }[]
     | null;
-  imgUrl: number | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -494,14 +494,14 @@ export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   name?: T;
   description?: T;
-  projectLink?: T;
+  githubLink?: T;
+  demoLink?: T;
   tags?:
     | T
     | {
         tag?: T;
         id?: T;
       };
-  imgUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }

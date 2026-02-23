@@ -35,13 +35,12 @@ export function Experience({ experiences }: ExperienceProps) {
                 <span
                   dangerouslySetInnerHTML={{ __html: a.companyHtml }}
                   className="app__experience-description-primary-name"
-                  suppressHydrationWarning
                 />
                 <span className="app__experience-description-primary-date">
                   {convertDate(a.JoiningDate)} &nbsp;-&nbsp; {convertDate(a.endDate)}
                 </span>
               </div>
-              <p dangerouslySetInnerHTML={{ __html: a.descHtml }} suppressHydrationWarning />
+              <div dangerouslySetInnerHTML={{ __html: a.descHtml }} />
             </div>
           </div>
         ))}

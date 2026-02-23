@@ -4,11 +4,13 @@ import { IoIosDocument } from 'react-icons/io'
 import { MdEmail } from 'react-icons/md'
 import { FaLinkedin, FaGithub } from 'react-icons/fa'
 import { downloadPdf } from '@/lib/downloadPdf'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import './About.scss'
 
 type AboutItem = {
   title: string
-  descriptionHtml: string
+  description: SerializedEditorState
   imgUrl: string
 }
 
@@ -25,52 +27,105 @@ export function About({ about, hasResume }: AboutProps) {
           <img key={index} src={a.imgUrl} alt={a.title} />
         ))}
       </div>
-      <div className="app__about-description" suppressHydrationWarning>
+      <div className="app__about-description">
         <h5>About Me</h5>
         <h4>WHO AM I?</h4>
         {about.map((a, index) => (
-          <p key={index} dangerouslySetInnerHTML={{ __html: a.descriptionHtml }} suppressHydrationWarning />
+          <div key={index} className="p-text">
+            <RichText data={a.description} />
+          </div>
         ))}
+        {/* spacing below kept from original component */}
         <br />
         <br />
 
         {hasResume && (
-          <button
-            className="app__about-button"
-            onClick={() => downloadPdf('resume')}
-          >
+          <button className="app__about-button" onClick={() => downloadPdf('resume')}>
             <IoIosDocument />
-            <span style={{ display: 'inline-block', width: '1px', height: '1px', backgroundColor: 'transparent' }} />
+            <span
+              style={{
+                display: 'inline-block',
+                width: '1px',
+                height: '1px',
+                backgroundColor: 'transparent',
+              }}
+            />
             Resume
             <span className="app__about-button-ripple" />
           </button>
         )}
 
-        <span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'transparent' }} />
+        <span
+          style={{
+            display: 'inline-block',
+            width: '10px',
+            height: '10px',
+            backgroundColor: 'transparent',
+          }}
+        />
 
         <a href="mailto:rajaninaman16@gmail.com">
           <button className="app__about-button">
             <MdEmail />
-            <span style={{ display: 'inline-block', width: '3px', height: '3px', backgroundColor: 'transparent' }} />
+            <span
+              style={{
+                display: 'inline-block',
+                width: '3px',
+                height: '3px',
+                backgroundColor: 'transparent',
+              }}
+            />
             Email
             <span className="app__about-button-ripple" />
           </button>
         </a>
 
-        <span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'transparent' }} />
+        <span
+          style={{
+            display: 'inline-block',
+            width: '10px',
+            height: '10px',
+            backgroundColor: 'transparent',
+          }}
+        />
         <a href="https://github.com/Naman16rajani" target="_blank" rel="noopener noreferrer">
           <button className="app__about-button">
             <FaGithub />
-            <span style={{ display: 'inline-block', width: '3px', height: '3px', backgroundColor: 'transparent' }} />
+            <span
+              style={{
+                display: 'inline-block',
+                width: '3px',
+                height: '3px',
+                backgroundColor: 'transparent',
+              }}
+            />
             GitHub
             <span className="app__about-button-ripple" />
           </button>
         </a>
-        <span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'transparent' }} />
-        <a href="https://www.linkedin.com/in/naman-rajani/" target="_blank" rel="noopener noreferrer">
+        <span
+          style={{
+            display: 'inline-block',
+            width: '10px',
+            height: '10px',
+            backgroundColor: 'transparent',
+          }}
+        />
+        <a
+          href="https://www.linkedin.com/in/naman-rajani/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <button className="app__about-button">
             <FaLinkedin />
-            <span style={{ display: 'inline-block', width: '3px', height: '3px', backgroundColor: 'transparent' }} />
+            <span
+              style={{
+                display: 'inline-block',
+                width: '3px',
+                height: '3px',
+                backgroundColor: 'transparent',
+              }}
+            />
             LinkedIn
             <span className="app__about-button-ripple" />
           </button>
