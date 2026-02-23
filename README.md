@@ -1,4 +1,4 @@
-# Portfolio V2
+# Portfolio
 
 Payload CMS + Next.js portfolio project with PostgreSQL and Vercel Blob storage for media and resume PDF files.
 
