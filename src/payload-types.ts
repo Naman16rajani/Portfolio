@@ -206,6 +206,8 @@ export interface About {
     [k: string]: unknown;
   };
   imgUrl: number | Media;
+  githubUrl?: string | null;
+  linkedinUrl?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -466,6 +468,8 @@ export interface AboutsSelect<T extends boolean = true> {
   phone?: T;
   description?: T;
   imgUrl?: T;
+  githubUrl?: T;
+  linkedinUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -40,5 +40,15 @@ export const Abouts: CollectionConfig = {
       relationTo: 'media',
       required: true,
     },
+    {
+      name: 'githubUrl',
+      type: 'text',
+      required: false,
+    },
+    {
+      name: 'linkedinUrl',
+      type: 'text',
+      required: false,
+    },
   ],
 }
