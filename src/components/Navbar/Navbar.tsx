@@ -7,7 +7,9 @@ import { IoPerson } from 'react-icons/io5'
 import { HiMiniSquares2X2 } from 'react-icons/hi2'
 import { IoIosDocument } from 'react-icons/io'
 import { NavigationButton } from '../NavigationButton/NavigationButton'
-import { downloadPdf } from '@/lib/downloadPdf'
+// resume download is handled via API redirect so helper no longer needed
+// import { downloadPdf } from '@/lib/downloadPdf'
+import { useResumePrefetch } from '@/lib/useResumePrefetch'
 import './Navbar.scss'
 
 function getIcon(id: string) {
@@ -35,9 +37,11 @@ function getAction(id: string) {
   return '#' + id
 }
 
-export function Navbar() {
+export function Navbar({ hasResume }: { hasResume: boolean }) {
   const [active, setActive] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+
+  const { openResume } = useResumePrefetch(hasResume)
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768)
@@ -52,11 +56,12 @@ export function Navbar() {
 
   async function handleItemClick(id: string) {
     if (id === 'resume') {
-      await downloadPdf(id)
+      await openResume()
     }
   }
 
-  const ids = ['home', 'about', 'experience', 'project', 'contact', 'resume']
+  const ids = ['home', 'about', 'experience', 'project', 'contact']
+  if (hasResume) ids.push('resume')
 
   if (isMobile) {
     return (
@@ -69,7 +74,7 @@ export function Navbar() {
             onClick={(e) => {
               if (id === 'resume') {
                 e.preventDefault()
-                downloadPdf(id)
+                openResume()
               }
             }}
           >
